@@ -47,11 +47,10 @@
     <% } %> <% if (typeof xAuthCode !== 'undefined') { %>
     <table id="response-table">
       <tr>
-        <th>Transaction ID (xRef)</th>
+        <th>Transaction ID (xRefNum)</th>
         <th>Amount (xAmount)</th>
         <th>Card Type (xCardType)</th>
-        <th>Last 4 Digits</th>
-        <th>xRef</th>
+        <th>Last 4 Digits(xCardLastFour)</th>
       </tr>
       <tr>
         <td><%= xCommand %></td>

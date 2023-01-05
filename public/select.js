@@ -8,7 +8,7 @@ const labelAmount = document.querySelector('label[for="xAmount"]');
 const reportFields = document.getElementById("reportFields");
 
 xCommand.addEventListener("change", (event) => {
-  // Get the selected value
+  event.preventDefault();
   const value = event.target.value;
 
   if (value === "Report:Approved") {
