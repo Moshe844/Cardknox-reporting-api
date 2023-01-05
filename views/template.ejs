@@ -44,6 +44,25 @@
     </div>
     <% } %> <% if (typeof xError !== 'undefined') { %>
     <div id="error-message"><%= xError %>: Ref Number <%= xRefNum %></div>
+    <% } %> <% if (typeof xAuthCode !== 'undefined') { %>
+    <table id="response-table">
+      <tr>
+        <th>Transaction ID (xRef)</th>
+        <th>Amount (xAmount)</th>
+        <th>Card Type (xCardType)</th>
+        <th>Last 4 Digits</th>
+        <th>xRef</th>
+      </tr>
+      <tr>
+        <td><%= xCommand %></td>
+        <td><%= xAmount %></td>
+        <td><%= xCardType %></td>
+        <td><%= xBeginDate %></td>
+        <td><%= xEndDate %></td>
+        <td><%= xCardLastFour %></td>
+        <td><%= xRefNum %></td>
+      </tr>
+    </table>
     <% } %>
 
     <script src="/select.js"></script>
