@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="template.css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="payment-form" action="/gatewayjson" method="get">
+      <label for="xKey">Cardknox Key:</label>
+      <input type="text" id="xKey" name="xKey" />
+      <label for="xCommand">Command:</label>
+      <select id="xCommand" name="xCommand">
+        <option value="cc:sale">cc:sale</option>
+        <option value="Report:Approved">Report:Approved</option>
+      </select>
+      <div class="ccFieldsForm cardInfo">
+        <label for="xCardNum">Card Number:</label>
+        <input type="text" id="xCardNum" name="xCardNum" />
+        <label for="xExp">Expiration Date:</label>
+        <input type="text" id="xExp" name="xExp" />
+      </div>
+      <div id="reportFields" style="display: none">
+        <label for="xBeginDate">Begin Date:</label>
+        <input type="date" id="xBeginDate" name="xBeginDate" />
+        <label for="xEndDate">End Date:</label>
+        <input type="date" id="xEndDate" name="xEndDate" />
+      </div>
+      <div class="ccFieldsForm paymentInfo">
+        <label for="xAmount">Amount:</label>
+        <input type="text" id="xAmount" name="xAmount" />
+      </div>
+      <input type="submit" value="Submit" />
+    </form>
+
+    <% if (typeof xAuthCode !== 'undefined') { %>
+    <div id="success-message" style="display: block">
+      Transaction processed successfully with approval code: <%= xAuthCode %>
+      and reference number: <%= xRefNum %>.
+    </div>
+    <% } %> <% if (typeof xError !== 'undefined') { %>
+    <div id="error-message"><%= xError %>: Ref Number <%= xRefNum %></div>
+    <% } %>
+
+    <script src="/select.js"></script>
+    <script src="/modify.js"></script>
+  </body>
+</html>
