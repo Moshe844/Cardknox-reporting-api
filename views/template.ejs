@@ -7,10 +7,11 @@
 
     <link rel="stylesheet" href="template.css" />
 
-    <title>Document</title>
+    <title>Transaction API</title>
   </head>
   <body>
-    <form id="payment-form" action="/gatewayjson" method="get">
+    <%- include('report.ejs') %>
+    <form id="payment-form">
       <label for="xKey">Cardknox Key:</label>
       <input type="text" id="xKey" name="xKey" />
       <label for="xCommand">Command:</label>
@@ -24,17 +25,11 @@
         <label for="xExp">Expiration Date:</label>
         <input type="text" id="xExp" name="xExp" />
       </div>
-      <div id="reportFields" style="display: none">
-        <label for="xBeginDate">Begin Date:</label>
-        <input type="date" id="xBeginDate" name="xBeginDate" />
-        <label for="xEndDate">End Date:</label>
-        <input type="date" id="xEndDate" name="xEndDate" />
-      </div>
       <div class="ccFieldsForm paymentInfo">
         <label for="xAmount">Amount:</label>
         <input type="text" id="xAmount" name="xAmount" />
       </div>
-      <input type="submit" value="Submit" />
+      <button type="submit">Submit</button>
     </form>
 
     <% if (typeof xAuthCode !== 'undefined') { %>
@@ -44,27 +39,11 @@
     </div>
     <% } %> <% if (typeof xError !== 'undefined') { %>
     <div id="error-message"><%= xError %>: Ref Number <%= xRefNum %></div>
-    <% } %> <% if (typeof xAuthCode !== 'undefined') { %>
-    <table id="response-table">
-      <tr>
-        <th>Transaction ID (xRefNum)</th>
-        <th>Amount (xAmount)</th>
-        <th>Card Type (xCardType)</th>
-        <th>Last 4 Digits(xCardLastFour)</th>
-      </tr>
-      <tr>
-        <td><%= xCommand %></td>
-        <td><%= xAmount %></td>
-        <td><%= xCardType %></td>
-        <td><%= xBeginDate %></td>
-        <td><%= xEndDate %></td>
-        <td><%= xCardLastFour %></td>
-        <td><%= xRefNum %></td>
-      </tr>
-    </table>
-    <% } %>
+    <% } %> <% var xCommand = typeof xCommand !== 'undefined' ? xCommand :
+    "cc:sale" %>
 
     <script src="/select.js"></script>
     <script src="/modify.js"></script>
+    <script src="/onchange.js" defer type="module"></script>
   </body>
 </html>

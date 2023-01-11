@@ -9,11 +9,11 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
 app.get("/gatewayjson", (req, res) => {
-  const xKey = req.query.xKey;
-  const xCommand = req.query.xCommand;
-  const xCardNum = req.query.xCardNum;
-  const xExp = req.query.xExp;
-  const xAmount = req.query.xAmount;
+  const { xKey } = req.query;
+  const { xCommand } = req.query;
+  const { xCardNum } = req.query;
+  const { xExp } = req.query;
+  const { xAmount } = req.query;
   const xSoftwareName = "Cardknox";
   const xSoftwareVersion = "2.1";
   const xVersion = "5.0.0";
@@ -35,6 +35,7 @@ app.get("/gatewayjson", (req, res) => {
       method: "POST",
       body: body,
     },
+    // eslint-disable-next-line no-shadow
     (error, response, body) => {
       if (error) {
         console.log(error);
@@ -42,10 +43,10 @@ app.get("/gatewayjson", (req, res) => {
         console.log(body);
 
         const responseObject = JSON.parse(body);
-        const xAuthCode = responseObject.xAuthCode;
-        const xRefNum = responseObject.xRefNum;
-        const xStatus = responseObject.xStatus;
-        const xError = responseObject.xError;
+        const { xAuthCode } = responseObject;
+        const { xRefNum } = responseObject;
+        const { xStatus } = responseObject;
+        const { xError } = responseObject;
 
         if (xError) {
           res.render("template", {
@@ -58,6 +59,7 @@ app.get("/gatewayjson", (req, res) => {
             xAuthCode: xAuthCode,
             xRefNum: xRefNum,
             xStatus: xStatus,
+            xCommand: xCommand,
           });
         }
       }
@@ -66,13 +68,13 @@ app.get("/gatewayjson", (req, res) => {
 });
 
 app.get("/reportjson", (req, res) => {
-  const xKey = req.query.xKey;
-  const xCommand = req.query.xCommand;
+  const { xKey } = req.query;
+  const { xCommand } = req.query;
   const xVersion = "5.0.0";
   const xSoftwareName = "Cardknox";
   const xSoftwareVersion = "2.1";
-  const xBeginDate = req.query.xBeginDate;
-  const xEndDate = req.query.xEndDate;
+  const { xBeginDate } = req.query;
+  const { xEndDate } = req.query;
 
   const body = JSON.stringify({
     xKey: xKey,
@@ -90,6 +92,7 @@ app.get("/reportjson", (req, res) => {
       method: "POST",
       body: body,
     },
+    // eslint-disable-next-line no-shadow
     (error, response, body) => {
       if (error) {
         console.log(error);
@@ -100,35 +103,25 @@ app.get("/reportjson", (req, res) => {
         const responseObject = JSON.parse(body);
 
         // Extract the relevant fields from the response
-        const xAmount = responseObject.xAmount;
-        const xAuthAmount = responseObject.xAuthAmount;
-        const xCardType = responseObject.xCardType;
-        const xCommand = responseObject.xCommand;
-        const xEnteredDate = responseObject.xEnteredDate;
-        const xExp = responseObject.xExp;
-        const xMaskedAccountNumber = responseObject.xMaskedAccountNumber;
-        const xMaskedCardnumber = responseObject.xMaskedCardnumber;
-        const xRefnum = responseObject.xRefnum;
-        const xRefNumCurrent = responseObject.xRefNumCurrent;
-        const xResponseError = responseObject.xResponseError;
-        const xResponseResult = responseObject.xResponseResult;
-        const xToken = responseObject.xToken;
 
-        // Render the response fields in a template
-        res.render("template", {
-          xAmount: xAmount,
-          xAuthAmount: xAuthAmount,
-          xCardType: xCardType,
-          xCommand: xCommand,
-          xEnteredDate: xEnteredDate,
-          xExp: xExp,
-          xMaskedAccountNumber: xMaskedAccountNumber,
-          xMaskedCardnumber: xMaskedCardnumber,
-          xRefnum: xRefnum,
-          xRefNumCurrent: xRefNumCurrent,
-          xResponseError: xResponseError,
-          xResponseResult: xResponseResult,
-          xToken: xToken,
+        const data = [];
+        data.push({
+          xAmount: responseObject.xAmount,
+          xAuthAmount: responseObject.xAuthAmount,
+          xCardType: responseObject.xCardType,
+          xCommand: responseObject.xCommand,
+          xEnteredDate: responseObject.xEnteredDate,
+          xExp: responseObject.xExp,
+          xMaskedAccountNumber: responseObject.xMaskedAccountNumber,
+          xMaskedCardnumber: responseObject.xMaskedCardnumber,
+          xRefNum: responseObject.xRefNum,
+          xRefNumCurrent: responseObject.xRefNumCurrent,
+          xResponseError: responseObject.xResponseError,
+          xResponseResult: responseObject.xResponseResult,
+          xToken: responseObject.xToken,
+        });
+        res.render("report", {
+          data: data,
         });
       }
     }
