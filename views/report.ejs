@@ -7,21 +7,6 @@
     <title>Reporting API</title>
   </head>
   <body>
-    <form id="payment-form">
-      <label for="xKey">Cardknox Key:</label>
-      <input type="text" id="xKey" name="xKey" />
-      <div id="reportFields" style="display: none">
-        <label for="xBeginDate">Begin Date:</label>
-        <input type="date" id="xBeginDate" name="xBeginDate" />
-        <label for="xEndDate">End Date:</label>
-        <input type="date" id="xEndDate" name="xEndDate" />
-      </div>
-      <div class="ccFieldsForm paymentInfo">
-        <label for="xAmount">Amount:</label>
-        <input type="text" id="xAmount" name="xAmount" />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
     <% if (typeof xAuthCode !== 'undefined') { %>
     <table id="response-table">
       <tr>
@@ -48,5 +33,7 @@
     <% }); %> <% } catch (error) { %>
     <div id="error-message">Error: <%= error.message %></div>
     <% } %>
+
+    <script src="select.js"></script>
   </body>
 </html>

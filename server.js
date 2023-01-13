@@ -68,22 +68,22 @@ app.get("/gatewayjson", (req, res) => {
 });
 
 app.get("/reportjson", (req, res) => {
-  const { xKey } = req.query;
-  const { xCommand } = req.query;
   const xVersion = "5.0.0";
   const xSoftwareName = "Cardknox";
   const xSoftwareVersion = "2.1";
+  const { xKey } = req.query;
+  const { xCommand } = req.query;
   const { xBeginDate } = req.query;
   const { xEndDate } = req.query;
 
   const body = JSON.stringify({
-    xKey: xKey,
-    xCommand: xCommand,
-    xVersion: xVersion,
-    xSoftwareName: xSoftwareName,
-    xSoftwareVersion: xSoftwareVersion,
-    xBeginDate: xBeginDate,
-    xEndDate: xEndDate,
+    xKey,
+    xCommand,
+    xVersion,
+    xSoftwareName,
+    xSoftwareVersion,
+    xBeginDate,
+    xEndDate,
   });
 
   request(
@@ -101,26 +101,17 @@ app.get("/reportjson", (req, res) => {
 
         // Parse the response body
         const responseObject = JSON.parse(body);
+        const data = responseObject.xReportData.map((item) => ({
+          amount: item.xAmount,
+          cardType: item.xCardType,
+          beginDate: item.xEnteredDate,
+          endDate: item.xEnteredDate,
+          cardLastFour: item.xMaskedCardnumber,
+          refNum: item.xRefNum,
+        }));
 
-        // Extract the relevant fields from the response
-
-        const data = [];
-        data.push({
-          xAmount: responseObject.xAmount,
-          xAuthAmount: responseObject.xAuthAmount,
-          xCardType: responseObject.xCardType,
-          xCommand: responseObject.xCommand,
-          xEnteredDate: responseObject.xEnteredDate,
-          xExp: responseObject.xExp,
-          xMaskedAccountNumber: responseObject.xMaskedAccountNumber,
-          xMaskedCardnumber: responseObject.xMaskedCardnumber,
-          xRefNum: responseObject.xRefNum,
-          xRefNumCurrent: responseObject.xRefNumCurrent,
-          xResponseError: responseObject.xResponseError,
-          xResponseResult: responseObject.xResponseResult,
-          xToken: responseObject.xToken,
-        });
-        res.render("report", {
+        // Render the template with the data
+        res.render("template", {
           data: data,
         });
       }

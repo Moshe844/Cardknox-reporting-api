@@ -89,3 +89,19 @@ form input[type="submit"] {
 .paymentInfo input {
   width: 45%;
 }
+
+button {
+  background-color: transparent;
+  color: #0099cc;
+  border: 1px solid #0099cc;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px #eee;
+  text-shadow: none;
+  width: 100px;
+  height: 50px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #0099cc;
+  color: #ccc;
+}
